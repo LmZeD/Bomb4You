@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Bomb 4 You</string>
+
+    <string name="Regular_currency">0</string>
+    <string name="Premium_currency">0</string>
+    <string name="Achievement_Joined_clan">0</string>
+</resources>

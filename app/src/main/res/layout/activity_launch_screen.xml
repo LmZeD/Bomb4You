@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="a1515.bomb4you.LaunchScreen"
+    android:theme="@style/Theme.AppCompat.NoActionBar"
+    android:background="@drawable/background_first_screen">
+
+    <ImageButton
+        android:id="@+id/BFacebook"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_column="1"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_row="43"
+        android:background="@android:color/transparent"
+        android:onClick="FBButtonClick"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:srcCompat="@drawable/fb" />
+
+    <ImageButton
+        android:id="@+id/BLeaderboards"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_column="3"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_row="43"
+        android:background="@android:color/transparent"
+        android:onClick="LeaderboardsButtonClick"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/BFacebook"
+        app:layout_constraintRight_toLeftOf="@+id/BOptions"
+        app:srcCompat="@drawable/leaderboards" />
+
+    <ImageButton
+        android:id="@+id/BShop"
+        android:layout_width="261dp"
+        android:layout_height="47dp"
+        android:layout_column="1"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_row="3"
+        android:background="@android:color/transparent"
+        android:onClick="ShopButtonClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BPlay"
+        app:layout_constraintVertical_bias="0.331"
+        app:srcCompat="@drawable/shop" />
+
+    <ImageButton
+        android:id="@+id/BPlay"
+        android:layout_width="261dp"
+        android:layout_height="47dp"
+        android:layout_column="1"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_row="1"
+        android:background="@android:color/transparent"
+        android:onClick="PlayButtonClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.644"
+        app:srcCompat="@drawable/play" />
+
+    <ImageButton
+        android:id="@+id/BOptions"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_column="2"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_row="43"
+        android:layout_x="60dp"
+        android:layout_y="430dp"
+        android:background="@android:color/transparent"
+        android:onClick="OptionsButtonClick"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.964"
+        app:layout_constraintLeft_toRightOf="@+id/BFacebook"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/opt" />
+
+</android.support.constraint.ConstraintLayout>
