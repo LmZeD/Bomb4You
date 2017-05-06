@@ -75,22 +75,28 @@ public class Login extends AppCompatActivity {
         boolean test=TestLoginInfo(email,password);
 
         //end of validation
+        try {
+            if (test == true) {
+                Intent loginInfo = new Intent(this, MainScreen.class);
 
-        if(test==true) {
-            Intent loginInfo = new Intent(this, MainScreen.class);
+                loginInfo.putExtra("EMail", email.toString());
+                loginInfo.putExtra("Password", password.toString());
 
-            loginInfo.putExtra("EMail", email.toString());
-            loginInfo.putExtra("Password", password.toString());
+                CheckBox rememberMe = (CheckBox) (findViewById(CRemeberMyChoice));
+                if (rememberMe.isChecked()) {
+                    SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("RememberMe", 1);
+                    editor.commit();
+                }
 
-            CheckBox rememberMe=(CheckBox)(findViewById(CRemeberMyChoice));
-            if(rememberMe.isChecked()){
-                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("RememberMe", 1);
-                editor.commit();
+                startActivity(loginInfo);
             }
-
-            startActivity(loginInfo);
+        }
+        catch (Exception ex){
+            Toast.makeText(this,"Oops, something went wrong. Please try again.",Toast.LENGTH_SHORT);
+            Intent restart = new Intent(this, Login.class);
+            startActivity(restart);
         }
     }
 
@@ -100,7 +106,7 @@ public class Login extends AppCompatActivity {
         String errorMessage=null;
         TextView errMsgOutput=(TextView)(findViewById(TErrorOutput));
 
-        if(email==null || email.toLowerCase()=="email"){
+        if(email==null || email.toLowerCase()=="email" ){
             errorMessage="Please fill in E-mail or continue without registration";
             LoginFailure.putExtra("error",errorMessage);
             startActivity(LoginFailure);
@@ -124,8 +130,15 @@ public class Login extends AppCompatActivity {
         return true;
     }
 
-    public void WithoutRegistration(View view){
+    public void ForgotMyPassword(){
 
+
+
+    }
+
+    public void Register(View view){//needs modifications
+
+        Toast.makeText(this,"Not implemented yet",Toast.LENGTH_SHORT).show();
         Intent login=new Intent(this,MainScreen.class);
         login.putExtra("EMail","");
         login.putExtra("Password","");

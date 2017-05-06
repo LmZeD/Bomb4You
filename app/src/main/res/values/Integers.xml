@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="Cash">1000</integer>
+    <integer name="Gold">100</integer>
+    <integer name="Score">0</integer>
+    <integer name="RememberMe">0</integer>
+</resources>

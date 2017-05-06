@@ -7,4 +7,48 @@
     android:background="@drawable/background_home"
     tools:context="a1515.bomb4you.ShopScreen">
 
+    <TextView
+        android:id="@+id/ConstGoldTextShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="-4dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Gold"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="30sp"
+        android:typeface="serif"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.501" />
+
+    <TextView
+        android:id="@+id/ConstTextCashShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Cash"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Button1000Cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="+1000"
+        android:onClick="Button1000Cash"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstTextCashShop" />
+
 </android.support.constraint.ConstraintLayout>
