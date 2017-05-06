@@ -9,15 +9,16 @@
 
     <ImageButton
         android:id="@+id/BGoldMainScreen"
-        android:layout_width="186dp"
-        android:layout_height="60dp"
+        android:layout_width="160dp"
+        android:layout_height="42dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
+        android:onClick="RedirectToShop"
         android:scaleType="fitXY"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/goldField" />
+        app:srcCompat="@drawable/gold_field" />
 
     <ImageButton
         android:id="@+id/BOptMainScreen"
@@ -30,4 +31,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:srcCompat="@drawable/ingamemenu" />
+
+    <TextView
+        android:id="@+id/TGoldDisplayMainScreen"
+        android:layout_width="90dp"
+        android:layout_height="33dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
