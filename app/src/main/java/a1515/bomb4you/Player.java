@@ -8,7 +8,18 @@ public class Player {
     public int Score=0;
     public String ClanName=null;
     public String GameMode=null;
+    public String user_token=null;
 
+
+
+    //--------------------------------------------------------------------------
+    //getters and setters
+    public String getUser_token() {
+        return user_token;
+    }
+    public void setUser_token(String user_token) {
+        this.user_token = user_token;
+    }
     public void setGameMode(String mode){
         GameMode=mode;
     }
@@ -42,4 +53,5 @@ public class Player {
     public int getScore(){
         return Score;
     }
+    //-------------------------------------------------------------------------
 }

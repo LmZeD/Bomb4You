@@ -24,7 +24,7 @@ import java.lang.ref.ReferenceQueue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.regex.Pattern;
 
 
 import static a1515.bomb4you.R.id.CRemeberMyChoice;
@@ -109,7 +109,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                toastText("User doesn't exist");
             }
         }){
             @Override
@@ -160,7 +160,10 @@ public class Login extends AppCompatActivity {
             return false;
         }
 
-        if(!email.contains("@") || !email.contains(".")){
+        boolean testMail = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+
+
+        if(testMail == false){
             errorMessage="Not valid E-mail address";
             toastText(errorMessage);
             return false;
@@ -181,20 +184,9 @@ public class Login extends AppCompatActivity {
         return true;
     }
 
-    public void ForgotMyPassword(){
-
-
-
-    }
-
     public void Register(View view){//needs modifications
-
-        Toast.makeText(this,"Not implemented yet",Toast.LENGTH_SHORT).show();
-        Intent login=new Intent(this,MainScreen.class);
-        login.putExtra("EMail","");
-        login.putExtra("Password","");
-
-        startActivity(login);
+        Intent register=new Intent(this,RegisterForm.class);
+        startActivity(register);
     }
 
 }
