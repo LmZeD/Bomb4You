@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuPopupHelper;
@@ -35,9 +36,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static a1515.bomb4you.R.id.TEmail;
-import static a1515.bomb4you.R.id.TGoldDisplayMainScreen;
-
 
 public class MainScreen extends AppCompatActivity {
     int backButtonCount=0;
@@ -52,17 +50,27 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         backButtonCount=0;
         super.onCreate(savedInstanceState);
+        getUserInfoFromWeb();
         setContentView(R.layout.activity_main_screen);
+        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+
+
+
+        //if(gameMode.equals("counter_terrorist")) {
+        //    setBackgroundCt();
+        //}
+
+
         Intent intent =getIntent();
 
-        getUserInfoFromWeb();
         SetDisplayValues();
         //----------------------------------------------------------
 
 
         optMenuController();
-        popUpShopController();
-
+        shopScreenPopUpGold();
+        shopScreenPopUpCash();
 
 
 
@@ -71,10 +79,15 @@ public class MainScreen extends AppCompatActivity {
 
 
 
+    public void setBackgroundCt(){
+        ConstraintLayout constraintLayout;
+        constraintLayout = (ConstraintLayout) findViewById(R.id.MainScreenLayout);
+        //constraintLayout.setBackgroundResource(R.drawable.background_ct);
+        constraintLayout.setBackground( getResources().getDrawable(R.drawable.background_ct));
+    }
 
 
-
-    public void popUpShopController(){
+    public void shopScreenPopUpGold(){
         final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BGoldMainScreen));
         final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
@@ -83,7 +96,23 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-            startActivity(new Intent(MainScreen.this,PopUpShop.class));
+                startActivity(new Intent(MainScreen.this,ShopScreen.class));
+
+            };
+        });
+    }
+
+    public void shopScreenPopUpCash(){
+        final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BCashMainScreen));
+        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+
+        popUpMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            startActivity(new Intent(MainScreen.this,ShopScreen.class));
+
             };
         });
     }
@@ -115,7 +144,7 @@ public class MainScreen extends AppCompatActivity {
         final SharedPreferences.Editor editor = sharedPref.edit();
 
         final String user_token=sharedPref.getString("user_token","");
-        if(user_token==null){//security check
+        if(user_token.equals("")){//security check
             toastText("Login info corrupted. Please log in again");
             editor.clear();
             Intent intent =new Intent(this,Login.class);
@@ -209,29 +238,25 @@ public class MainScreen extends AppCompatActivity {
         final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
 
-        TextView goldDisplay=(TextView)(findViewById(R.id.TGoldDisplayMainScreen));
-        TextView scoreDisplay=(TextView)(findViewById(R.id.ScoreDisplMainScreen));
-        TextView cashDisplay=(TextView)(findViewById(R.id.CashDisplayMainScreen));
-        TextView dynamiteDisplay=(TextView)(findViewById(R.id.TDynamiteDisplayMainScreen));
-        TextView smallBombDisplay=(TextView)(findViewById(R.id.TSmallBombDisplMainScreen));
-        TextView bigBombDisplay=(TextView)(findViewById(R.id.TBigBombDisplayMainScreen));
-        TextView nuclearWeaponDisplay=(TextView)(findViewById(R.id.TDisplNuclearWeapon));
+        TextView goldDispl=(TextView)findViewById(R.id.TGoldDisplay);
+        TextView cashDispl=(TextView)findViewById(R.id.TCashDisplay);
+        TextView scoreDispl=(TextView)findViewById(R.id.TScoreDisplay);
 
         int gold=sharedPref.getInt("Gold",0);
         int score=sharedPref.getInt("Score",0);
         int cash=sharedPref.getInt("Cash",0);
-        int dynamite=sharedPref.getInt("Dynamite",0);
-        int smallBomb=sharedPref.getInt("SmallBomb",0);
-        int bigBomb=sharedPref.getInt("BigBomb",0);
-        int nuclearWeapon=sharedPref.getInt("NuclearWeapon",0);
-
-        goldDisplay.setText(Integer.toString(gold));
-        scoreDisplay.setText(Integer.toString(score));
-        cashDisplay.setText(Integer.toString(cash));
-        dynamiteDisplay.setText(Integer.toString(dynamite));
-        smallBombDisplay.setText(Integer.toString(smallBomb));
-        bigBombDisplay.setText(Integer.toString(bigBomb));
-        nuclearWeaponDisplay.setText(Integer.toString(nuclearWeapon));
+//        int dynamite=sharedPref.getInt("Dynamite",0);
+//        int smallBomb=sharedPref.getInt("SmallBomb",0);
+//        int bigBomb=sharedPref.getInt("BigBomb",0);
+//        int nuclearWeapon=sharedPref.getInt("NuclearWeapon",0);
+//
+        goldDispl.setText(Integer.toString(gold));
+        scoreDispl.setText(Integer.toString(score));
+        cashDispl.setText(Integer.toString(cash));
+//        dynamiteDisplay.setText(Integer.toString(dynamite));
+//        smallBombDisplay.setText(Integer.toString(smallBomb));
+//        bigBombDisplay.setText(Integer.toString(bigBomb));
+//        nuclearWeaponDisplay.setText(Integer.toString(nuclearWeapon));
     }
 
     public void optMenuController(){

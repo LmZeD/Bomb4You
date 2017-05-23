@@ -42,9 +42,11 @@ public class LaunchScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
-
-        menuButtonController();
-
+        try {
+            menuButtonController();
+        }catch (Exception ex){
+            toastText("oops, crashed");
+        }
 
 
 
@@ -75,19 +77,28 @@ public class LaunchScreen extends AppCompatActivity {
                         if(item.toString().equals("Logout")){
                             if(sharedPref.getString("Name","")=="guest" || sharedPref.getString("Name","").contains("guest")){
                                 editor.clear();
+                                editor.putInt("RememberMe",0);
+                                editor.commit();
+                                toastText("Logged out");
                             }else
                             {
                                 final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
                                 final SharedPreferences.Editor editor = sharedPref.edit();
 
                                 int gold=sharedPref.getInt("Gold",0);
-                                int cash=sharedPref.getInt("Cash",0);
                                 int score=sharedPref.getInt("Score",0);
-                                setValuesInWeb(gold,score,cash);
-                                    editor.clear();
-                                    editor.putInt("RememberMe",0);
-                                    editor.commit();
-                                    toastText("Logged out");
+                                int cash=sharedPref.getInt("Cash",0);
+                                int dynamite=sharedPref.getInt("Dynamite",0);
+                                int smallBomb=sharedPref.getInt("SmallBomb",0);
+                                int bigBomb=sharedPref.getInt("BigBomb",0);
+                                int nuclearWeapon=sharedPref.getInt("NuclearWeapon",0);
+
+                                setValuesInWeb(gold,score,cash,dynamite,smallBomb,bigBomb,nuclearWeapon);
+                                editor.clear();
+                                editor.putInt("RememberMe",0);
+                                editor.commit();
+
+                                toastText("Logged out");
                             }
                             return true;
                         }
@@ -112,7 +123,9 @@ public class LaunchScreen extends AppCompatActivity {
         Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
     }
 
-    public void setValuesInWeb(final int newGoldAmount, final int newScoreAmount, final int newCashAmount){
+    public void setValuesInWeb(final int newGoldAmount, final int newScoreAmount, final int newCashAmount,
+                               final int newDynamiteAmount, final int newSmallBombAmount,
+                               final int newBigBombAmount, final int newNuclearWeaponAmount){
         final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
         requestQueue = Volley.newRequestQueue(this);
         final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
@@ -136,12 +149,16 @@ public class LaunchScreen extends AppCompatActivity {
                 toastText("Value setting error");
             }
         }){
-            protected Map<String,String> getParams() throws AuthFailureError {
+            protected Map<String,String> getParams() throws AuthFailureError{
                 HashMap<String,String> hashMap =new HashMap<String,String>();
                 hashMap.put("user-token",user_token);
                 hashMap.put("score",Integer.toString(newScoreAmount));
                 hashMap.put("money",Integer.toString(newCashAmount));
                 hashMap.put("gold",Integer.toString(newGoldAmount));
+                hashMap.put("dynamite",Integer.toString(newDynamiteAmount));
+                hashMap.put("small_bomb",Integer.toString(newSmallBombAmount));
+                hashMap.put("big_bomb",Integer.toString(newBigBombAmount));
+                hashMap.put("nuclear_weapon",Integer.toString(newNuclearWeaponAmount));
                 return hashMap;
             }
         };
@@ -152,8 +169,9 @@ public class LaunchScreen extends AppCompatActivity {
     @Override
     public void onBackPressed(){//easter egg
         backButtonPressed++;
-        if(backButtonPressed>10){
+        if(backButtonPressed>5){
             toastText("Stop smashing back button!");
+            backButtonPressed=0;
         }
     }
 

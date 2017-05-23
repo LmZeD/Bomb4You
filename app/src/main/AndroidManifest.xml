@@ -3,10 +3,12 @@
     package="a1515.bomb4you">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/app_logo"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -14,7 +16,6 @@
         <activity android:name=".LaunchScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -22,14 +23,11 @@
         <activity android:name=".MainScreen" />
         <activity android:name=".ClanPage" />
         <activity android:name=".LeaderboardDisplay"/>
-        <activity android:name=".Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".Login"></activity>
+        <activity android:name=".ShopScreen"
+            android:theme="@style/AppTheme.PopUpShop">
         </activity>
-        <activity android:name=".ShopScreen"></activity>
+
         <activity android:name=".PopUpShop"
             android:theme="@style/AppTheme.PopUpShop">
         </activity>

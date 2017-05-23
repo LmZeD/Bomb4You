@@ -200,9 +200,9 @@ public class RegisterForm extends AppCompatActivity {
                         toastText("Successfully registered!");
 
                         editor.putString("user_token",jsonObject.getString("user_token"));
-                        editor.putString("name",name);
-                        editor.putString("email",email);
-                        editor.putString("gameMode",gameMode);
+                        editor.putString("Name",name);
+                        editor.putString("Email",email);
+                        editor.putString("GameMode",gameMode);
                         editor.commit();
                         Intent intent=new Intent(getApplicationContext(),MainScreen.class);
                         intent.getBooleanExtra("refreshed",false);
@@ -255,12 +255,12 @@ public class RegisterForm extends AppCompatActivity {
                         toastText("Successfully registered!");
 
                         editor.putString("user_token",jsonObject.getString("user_token"));
-                        editor.putString("gameMode",gameMode);
+                        editor.putString("GameMode",gameMode);
                         editor.putInt("RememberMe",1);
-                        editor.putString("name","guest");
-                        editor.putInt("gold",10);
-                        editor.putInt("cash",100);
-                        editor.putInt("score",0);
+                        editor.putString("Name","guest");
+                        editor.putInt("Gold",10);
+                        editor.putInt("Cash",100);
+                        editor.putInt("Score",0);
                         editor.commit();
                         Intent intent=new Intent(getApplicationContext(),MainScreen.class);
                         startActivity(intent);
