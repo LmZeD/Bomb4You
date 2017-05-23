@@ -94,7 +94,6 @@
         android:layout_x="60dp"
         android:layout_y="430dp"
         android:background="@android:color/transparent"
-        android:onClick="OptionsButtonClick"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.964"

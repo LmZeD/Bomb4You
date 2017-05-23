@@ -1,0 +1,14 @@
+    <menu xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <item
+        android:id="@+id/clanMenuOptMainScreen"
+        android:title="Clan"/>
+        <item
+            android:id="@+id/attackMenuOptMainScreen"
+            android:title="Attack"/>
+        <item
+            android:id="@+id/leaderboardsMainScreenPopUp"
+            android:title="Leaderboards"/>
+    </menu>

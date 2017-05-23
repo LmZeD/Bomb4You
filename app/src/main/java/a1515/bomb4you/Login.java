@@ -1,39 +1,14 @@
 package a1515.bomb4you;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.opengl.Visibility;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.lang.ref.ReferenceQueue;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-
-import static a1515.bomb4you.R.id.CRemeberMyChoice;
-import static a1515.bomb4you.R.id.TEmail;
-import static a1515.bomb4you.R.id.TErrorOutput;
-import static a1515.bomb4you.R.id.TPassword;
-import static a1515.bomb4you.R.id.checkbox;
-import static a1515.bomb4you.R.id.info;
-import static android.app.PendingIntent.getActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -46,40 +21,60 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static a1515.bomb4you.R.id.CRemeberMyChoice;
+import static a1515.bomb4you.R.id.TEmail;
+import static a1515.bomb4you.R.id.TPassword;
+
 public class Login extends AppCompatActivity {
 
-    private RequestQueue requestQueue;
+    private RequestQueue requestQueue;private StringRequest request;
     public static final String loginURL="http://bomb4you.tk/api/v1/auth/login";
-    private StringRequest request;
+    private final String userInfoURL="http://bomb4you.tk/api/v1/user/info";
+    private final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
+    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard";
+
     private int backButtonPressed=0;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+
         try {//if it's first run there won't be any intent
             Intent errorLaunch=getIntent();
             if(errorLaunch.getExtras().getString("error")!=null){
-                setUpErrorMsg(errorLaunch.getExtras().getString("error"));
+                toastText(errorLaunch.getExtras().getString("error"));
             }
             }
         catch (Exception ex){//just continue
         }
         try{//if 'remember me'
-            SharedPreferences preferences=getPreferences(Context.MODE_PRIVATE);
-            int a = preferences.getInt("RememberMe", 0);
+            int a = sharedPref.getInt("RememberMe",0);
             if(a==1){
-
                 Intent intent=new Intent(this,MainScreen.class);
                 Toast.makeText(this,"Welcome back",Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         }
         catch (Exception ex){
-
+            toastText("Remember me failure");
         }
 
 
+    }
+
+    public boolean rememberMeBoxChecked(){
+        CheckBox checkBox =(CheckBox) (findViewById(CRemeberMyChoice));
+        if(checkBox.isChecked()) return true;
+        return false;
     }
 
     public void toastText(String text){
@@ -88,6 +83,9 @@ public class Login extends AppCompatActivity {
 
     public void sendLoginRequestToWeb(final String email, final String password){
         requestQueue = Volley.newRequestQueue(this);
+        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+
 
         request = new StringRequest(Request.Method.POST, loginURL, new Response.Listener<String>() {
             @Override
@@ -97,7 +95,18 @@ public class Login extends AppCompatActivity {
 
                     if(jsonObject.names().get(0).equals("user_token")){
                         toastText("Welcome");
-                        startActivity(new Intent(getApplicationContext(),MainScreen.class));
+
+                        editor.putString("user_token",jsonObject.getString("user_token"));
+                        editor.commit();
+
+                        if(rememberMeBoxChecked()) {
+                            editor.putInt("RememberMe", 1);
+                            editor.commit();
+                        }
+                        getUserInfoFromWeb();
+                        Intent intent=new Intent(Login.this,MainScreen.class);
+                        intent.getBooleanExtra("refreshed",false);
+                        startActivity(intent);
                     }
                     else{
                          toastText("Wrong login data");
@@ -123,10 +132,51 @@ public class Login extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    public void getUserInfoFromWeb(){
+        requestQueue = Volley.newRequestQueue(this);
+        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
 
-    public void setUpErrorMsg(String msg){
-        TextView errOutput=(TextView)(findViewById(TErrorOutput));
-        errOutput.setText(msg);
+        final String user_token=sharedPref.getString("user_token","");
+        if(user_token==null){//security check
+            toastText("Login info corrupted. Please log in again");
+            editor.clear();
+            Intent intent =new Intent(this,Login.class);
+            startActivity(intent);
+        }
+        else {
+            request = new StringRequest(Request.Method.POST, userInfoURL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        editor.putInt("Score",jsonObject.getInt("score"));
+                        editor.putInt("Cash",jsonObject.getInt("money"));
+                        editor.putInt("Gold",jsonObject.getInt("gold"));
+                        editor.putInt("Id",jsonObject.getInt("id"));
+                        editor.putString("GameMode",jsonObject.getString("gamemode"));
+                        editor.apply();
+                        editor.commit();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    toastText("Error occurred");
+                }
+            }){
+                @Override
+                protected Map<String,String> getParams() throws AuthFailureError{
+                    HashMap<String,String> hashMap =new HashMap<String,String>();
+                    hashMap.put("user-token",user_token);
+                    return hashMap;
+                }
+            };
+            requestQueue.add(request);
+        }
     }
 
     public void Login(View view){
@@ -184,9 +234,8 @@ public class Login extends AppCompatActivity {
         return true;
     }
 
-    public void Register(View view){//needs modifications
+    public void Register(View view){
         Intent register=new Intent(this,RegisterForm.class);
         startActivity(register);
     }
-
 }
