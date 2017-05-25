@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
     public static final String loginURL="http://bomb4you.tk/api/v1/auth/login";
     private final String userInfoURL="http://bomb4you.tk/api/v1/user/info";
     private final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
-    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard";
+    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard_background";
 
     private int backButtonPressed=0;
 

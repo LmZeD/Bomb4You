@@ -33,7 +33,7 @@ public class LaunchScreen extends AppCompatActivity {
     private StringRequest request;
     private final String userInfoURL="http://bomb4you.tk/api/v1/user/info";
     private final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
-    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard";
+    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard_background";
     private int backButtonPressed=0;
 
 
@@ -44,6 +44,7 @@ public class LaunchScreen extends AppCompatActivity {
         setContentView(R.layout.activity_launch_screen);
         try {
             menuButtonController();
+            leaderboardConroller();
         }catch (Exception ex){
             toastText("oops, crashed");
         }
@@ -52,7 +53,18 @@ public class LaunchScreen extends AppCompatActivity {
 
     }
 
+    public void leaderboardConroller(){
+        final ImageButton leaderboardButton=(ImageButton)(findViewById(R.id.BLeaderboards));
+        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+        leaderboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LaunchScreen.this,LeaderboardDisplay.class));
+            }
+        });
 
+    }
 
     public void menuButtonController(){
         final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BOptions));
@@ -191,14 +203,7 @@ public class LaunchScreen extends AppCompatActivity {
         intent.setData(Uri.parse("http://www.facebook.com/bomb4you"));
         startActivity(intent);
     }
-    public void LeaderboardsButtonClick(View view){//opens leaderboards
-        Intent intent = new Intent(this,LeaderboardDisplay.class);
-        startActivity(intent);
-    }
 
-    public void OptionsButtonClick(View view){//options screen
-
-    }
 
 
 

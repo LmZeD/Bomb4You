@@ -36,7 +36,7 @@ public class ShopScreen extends AppCompatActivity implements View.OnClickListene
     private StringRequest request;
     private final String userInfoURL="http://bomb4you.tk/api/v1/user/info";
     private final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
-    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard";
+    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard_background";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

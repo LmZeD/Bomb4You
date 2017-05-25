@@ -43,7 +43,7 @@ public class MainScreen extends AppCompatActivity {
     private StringRequest request;
     private final String userInfoURL="http://bomb4you.tk/api/v1/user/info";
     private final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
-    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard";
+    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard_background";
 
 
     @Override
@@ -277,19 +277,8 @@ public class MainScreen extends AppCompatActivity {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-
-                        if(item.toString().equals("Attack")){
-                            toastText("Not implemented yet. Added 10 to score");
-                            addScore(10);
-                            SetDisplayValues();
-                            return true;
-                        }
-                        if(item.toString().equals("Clan")){
-                            toastText("Not implemented yet");
-                            return true;
-                        }
                         if(item.toString().equals("Leaderboards")){
-                            toastText("Not implemented yet");
+                            startActivity(new Intent(MainScreen.this,LeaderboardDisplay.class));
                             return true;
                         }
 
@@ -321,7 +310,7 @@ public class MainScreen extends AppCompatActivity {
     {
         if(backButtonCount >= 1)
         {
-            Intent intent = new Intent(this,LaunchScreen.class);
+            Intent intent = new Intent(MainScreen.this,LaunchScreen.class);
             startActivity(intent);
         }
         else
