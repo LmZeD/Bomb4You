@@ -3,25 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background_home"
+    android:background="@drawable/backround_new"
     android:layout_height="match_parent"
     tools:context="a1515.bomb4you.RegisterForm">
-
-    <TextView
-        android:id="@+id/ConstTextConfirmPasswordRegistrationForm"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Confirm password"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/TPasswordRegistrationForm"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/TNameRegistrationForm"
@@ -34,12 +18,13 @@
         android:textColor="@android:color/holo_green_dark"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ConstTextNameRegistrationForm"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <EditText
         android:id="@+id/TEmailRegistrationForm"
@@ -48,46 +33,15 @@
         android:ems="10"
         android:imeOptions="actionDone"
         android:inputType="textEmailAddress"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ConstTextEmailRegistrationForm"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/ConstTextNameRegistrationForm"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/ConstTextPasswordRegistrationForm"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Enter password"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/TEmailRegistrationForm"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
-    <Button
+    <ImageButton
         android:id="@+id/BRegister"
         android:layout_width="241dp"
         android:layout_height="52dp"
@@ -95,10 +49,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="7dp"
         android:layout_weight="1"
+        android:backgroundTint="@android:color/transparent"
+        android:scaleType="fitXY"
         android:text="Register"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TConfirmPasswordRegistrationForm" />
+        app:layout_constraintTop_toBottomOf="@+id/TConfirmPasswordRegistrationForm"
+        app:srcCompat="@drawable/register_btn" />
 
     <EditText
         android:id="@+id/TPasswordRegistrationForm"
@@ -106,13 +63,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ConstTextPasswordRegistrationForm"
         android:layout_marginLeft="8dp"
         android:imeOptions="actionDone"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView11"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
         android:id="@+id/TConfirmPasswordRegistrationForm"
@@ -121,42 +79,80 @@
         android:ems="10"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ConstTextConfirmPasswordRegistrationForm"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/ConstTextEmailRegistrationForm"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/TNameRegistrationForm"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
-    <Button
+    <ImageButton
         android:id="@+id/BWihoutRegistrationRegistrationForm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         android:text="Continue without registration"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:srcCompat="@drawable/without_registration" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="230dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/name"
+        />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="230dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TNameRegistrationForm"
+        app:srcCompat="@drawable/email" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="230dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="-16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/password"
+        app:layout_constraintHorizontal_bias="0.445"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/TEmailRegistrationForm" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="230dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TPasswordRegistrationForm"
+        app:srcCompat="@drawable/conf_password"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="a1515.bomb4you.LaunchScreen"
-    android:theme="@style/Theme.AppCompat.NoActionBar"
-    android:background="@drawable/background_first_screen">
+    android:background="@drawable/background_new_first"
+    android:theme="@style/Theme.AppCompat.NoActionBar">
 
     <ImageButton
         android:id="@+id/BFacebook"

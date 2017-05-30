@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,40 +45,42 @@ public class MainScreen extends AppCompatActivity {
     private StringRequest request;
     private final String userInfoURL="http://bomb4you.tk/api/v1/user/info";
     private final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
-    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard_background";
+    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard";
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         backButtonCount=0;
-        super.onCreate(savedInstanceState);
-        getUserInfoFromWeb();
-        setContentView(R.layout.activity_main_screen);
-        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
+        try {
+            super.onCreate(savedInstanceState);
+            getUserInfoFromWeb();
+            setContentView(R.layout.activity_main_screen);
+            final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+            final SharedPreferences.Editor editor = sharedPref.edit();
 
 
-
-        //if(gameMode.equals("counter_terrorist")) {
-        //    setBackgroundCt();
-        //}
-
-
-        Intent intent =getIntent();
-
-        SetDisplayValues();
-        //----------------------------------------------------------
+            //if(gameMode.equals("counter_terrorist")) {
+            //    setBackgroundCt();
+            //}
+            SetDisplayValues();
+            //----------------------------------------------------------
 
 
-        optMenuController();
-        shopScreenPopUpGold();
-        shopScreenPopUpCash();
+            optMenuController();
+            bombShopScreen();
 
-
+        }
+        catch (Exception e){
+            toastText(e.getMessage().toString());
+        }
 
 
     }
 
+
+    public void redirectToPopUpShop(View view){
+        startActivity(new Intent(MainScreen.this,PopUpShop.class));
+    }
 
 
     public void setBackgroundCt(){
@@ -86,9 +90,8 @@ public class MainScreen extends AppCompatActivity {
         constraintLayout.setBackground( getResources().getDrawable(R.drawable.background_ct));
     }
 
-
-    public void shopScreenPopUpGold(){
-        final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BGoldMainScreen));
+    public void bombShopScreen(){
+        final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BBombList));
         final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -102,41 +105,8 @@ public class MainScreen extends AppCompatActivity {
         });
     }
 
-    public void shopScreenPopUpCash(){
-        final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BCashMainScreen));
-        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
 
-        popUpMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            startActivity(new Intent(MainScreen.this,ShopScreen.class));
-
-            };
-        });
-    }
-
-    public void addScore(int amount){
-        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
-
-        int gold=sharedPref.getInt("Gold",0);
-        int score=sharedPref.getInt("Score",0);
-        int cash=sharedPref.getInt("Cash",0);
-        int dynamite=sharedPref.getInt("Dynamite",0);
-        int smallBomb=sharedPref.getInt("SmallBomb",0);
-        int bigBomb=sharedPref.getInt("BigBomb",0);
-        int nuclearWeapon=sharedPref.getInt("NuclearWeapon",0);
-
-        score=score+amount;
-
-        editor.putInt("Score",score);
-        editor.apply();
-        editor.commit();
-
-        setValuesInWeb(gold,score,cash,dynamite,smallBomb,bigBomb,nuclearWeapon);
-    }
 
     public void getUserInfoFromWeb(){
         requestQueue = Volley.newRequestQueue(this);
@@ -177,7 +147,7 @@ public class MainScreen extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    toastText("Error occurred");
+                    toastText("Error occurred...");
                 }
             }){
                 @Override
@@ -235,6 +205,7 @@ public class MainScreen extends AppCompatActivity {
 
 
     public void SetDisplayValues(){
+
         final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -259,6 +230,10 @@ public class MainScreen extends AppCompatActivity {
 //        nuclearWeaponDisplay.setText(Integer.toString(nuclearWeapon));
     }
 
+    public void attackButtonController(View view){
+        startActivity(new Intent(MainScreen.this,AttackPopUp.class));
+    }
+
     public void optMenuController(){
         final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BOptMainScreen));
         final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
@@ -279,6 +254,47 @@ public class MainScreen extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         if(item.toString().equals("Leaderboards")){
                             startActivity(new Intent(MainScreen.this,LeaderboardDisplay.class));
+                            return true;
+                        }
+                        if(item.toString().equals("FB page")){
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                            intent.setData(Uri.parse("http://www.facebook.com/bomb4you"));
+                            startActivity(intent);
+                            return true;
+                        }
+                        if(item.toString().equals("Logout")){
+                            if(item.toString().equals("Logout")){
+                                if(sharedPref.getString("Name","")=="guest" || sharedPref.getString("Name","").contains("guest")){
+                                    editor.clear();
+                                    editor.putInt("RememberMe",0);
+                                    editor.commit();
+                                    toastText("Logged out");
+                                    startActivity(new Intent(MainScreen.this,LaunchScreen.class));
+                                }else
+                                {
+                                    final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+                                    final SharedPreferences.Editor editor = sharedPref.edit();
+
+                                    int gold=sharedPref.getInt("Gold",0);
+                                    int score=sharedPref.getInt("Score",0);
+                                    int cash=sharedPref.getInt("Cash",0);
+                                    int dynamite=sharedPref.getInt("Dynamite",0);
+                                    int smallBomb=sharedPref.getInt("SmallBomb",0);
+                                    int bigBomb=sharedPref.getInt("BigBomb",0);
+                                    int nuclearWeapon=sharedPref.getInt("NuclearWeapon",0);
+
+                                    setValuesInWeb(gold,score,cash,dynamite,smallBomb,bigBomb,nuclearWeapon);
+                                    editor.clear();
+                                    editor.putInt("RememberMe",0);
+                                    editor.commit();
+
+                                    toastText("Logged out");
+                                    startActivity(new Intent(MainScreen.this,LaunchScreen.class));
+                                }
+                                return true;
+                            }
                             return true;
                         }
 
@@ -315,6 +331,7 @@ public class MainScreen extends AppCompatActivity {
         }
         else
         {
+            SetDisplayValues();
             Toast.makeText(this, "Press the back button once again to return to launch screen.", Toast.LENGTH_SHORT).show();
             backButtonCount++;
         }

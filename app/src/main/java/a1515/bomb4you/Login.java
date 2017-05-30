@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -41,33 +42,34 @@ public class Login extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
 
-        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
+            final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+            final SharedPreferences.Editor editor = sharedPref.edit();
 
-        try {//if it's first run there won't be any intent
-            Intent errorLaunch=getIntent();
-            if(errorLaunch.getExtras().getString("error")!=null){
-                toastText(errorLaunch.getExtras().getString("error"));
+            try {//if it's first run there won't be any intent
+                Intent errorLaunch = getIntent();
+                if (errorLaunch.getExtras().getString("error") != null) {
+                    toastText(errorLaunch.getExtras().getString("error"));
+                }
+            } catch (Exception ex) {//just continue
             }
+            try {//if 'remember me'
+                int a = sharedPref.getInt("RememberMe", 0);
+                if (a == 1) {
+                    Intent intent = new Intent(this, MainScreen.class);
+                    Toast.makeText(this, "Welcome back", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                }
+            } catch (Exception ex) {
+                toastText("Remember me failure");
             }
-        catch (Exception ex){//just continue
+        }catch (Exception e){
+            toastText(e.getMessage().toString());
         }
-        try{//if 'remember me'
-            int a = sharedPref.getInt("RememberMe",0);
-            if(a==1){
-                Intent intent=new Intent(this,MainScreen.class);
-                Toast.makeText(this,"Welcome back",Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }
-        }
-        catch (Exception ex){
-            toastText("Remember me failure");
-        }
-
 
     }
 

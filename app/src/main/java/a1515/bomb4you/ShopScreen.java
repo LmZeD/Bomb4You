@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,10 +37,12 @@ public class ShopScreen extends AppCompatActivity implements View.OnClickListene
     private StringRequest request;
     private final String userInfoURL="http://bomb4you.tk/api/v1/user/info";
     private final String scoreSetURL="http://bomb4you.tk/api/v1/score/set";
-    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard_background";
+    private static String leaderboardsURL = "http://bomb4you.tk/api/v1/score/leaderboard";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        try {
+
+            super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_shop_screen);
 
@@ -47,65 +50,16 @@ public class ShopScreen extends AppCompatActivity implements View.OnClickListene
         bigBombController();
         dynamiteController();
         nuclearWeaponController();
-        plusButtonController();
-
+        }catch (Exception e){
+            toastText(e.getMessage().toString());
+        }
     }
 
 
 
 
-    public void plusButtonController(){
-        final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
 
-        final int gold=sharedPref.getInt("Gold",0);
-        final int score=sharedPref.getInt("Score",0);
-        final int cash=sharedPref.getInt("Cash",0);
-        final int dynamite=sharedPref.getInt("Dynamite",0);
-        final int smallBomb=sharedPref.getInt("SmallBomb",0);
-        final int bigBomb=sharedPref.getInt("BigBomb",0);
-        final int nuclearWeapon=sharedPref.getInt("NuclearWeapon",0);
 
-        ImageButton button = (ImageButton)findViewById(R.id.BPlusShopScreen);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ShopScreen.this);
-                View view = getLayoutInflater().inflate(R.layout.pop_up_shop,null);
-                ImageButton buyCash = (ImageButton) view.findViewById(R.id.BBuy1000cash);
-                ImageButton buyGold = (ImageButton) view.findViewById(R.id.BBuy10000Gold);
-                ImageButton exit=(ImageButton) view.findViewById(R.id.BExitPopUpShop);
-
-                builder.setView(view);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-                buyCash.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setValuesInWeb(gold,score,cash+1000,dynamite,smallBomb,bigBomb,nuclearWeapon);
-                        toastText("1000 cash added!");
-                    }
-                });
-
-                buyGold.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setValuesInWeb(gold+10000,score,cash,dynamite,smallBomb,bigBomb,nuclearWeapon);
-                        toastText("10000 gold added!");
-                    }
-                });
-
-                exit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(ShopScreen.this,ShopScreen.class));
-                    }
-                });
-            };
-        });
-
-    }
 
 
 
@@ -601,12 +555,16 @@ public class ShopScreen extends AppCompatActivity implements View.OnClickListene
         final SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         if (!sharedPref.getString("user_token", "").equals(""))
         {
-            Intent intent = new Intent(this,MainScreen.class);
+        try {
+            Intent intent = new Intent(ShopScreen.this, MainScreen.class);
             startActivity(intent);
+        }catch (Exception e){
+            toastText("crash in shopScreen intent");
+        }
         }
         else
         {
-            Intent intent = new Intent(this,LaunchScreen.class);
+            Intent intent = new Intent(ShopScreen.this,LaunchScreen.class);
             startActivity(intent);
         }
     }

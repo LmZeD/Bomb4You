@@ -188,8 +188,12 @@ public class LaunchScreen extends AppCompatActivity {
     }
 
     public void PlayButtonClick(View view){//hop to login screen
-        Intent intent =new Intent(this,Login.class);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(LaunchScreen.this, Login.class);
+            startActivity(intent);
+        }catch (Exception e){
+            toastText(e.getMessage().toString());
+        }
     }
 
     public void ShopButtonClick(View view){//hop to shop page

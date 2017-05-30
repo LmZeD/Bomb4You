@@ -21,9 +21,9 @@
         </activity>
         <activity android:name=".RegisterForm" />
         <activity android:name=".MainScreen" />
-        <activity android:name=".ClanPage" />
         <activity android:name=".LeaderboardDisplay"/>
         <activity android:name=".Login"></activity>
+        <activity android:name=".AttackPopUp"></activity>
         <activity android:name=".ShopScreen"
             android:theme="@style/AppTheme.PopUpShop">
         </activity>

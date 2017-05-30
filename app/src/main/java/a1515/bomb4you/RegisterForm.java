@@ -90,7 +90,7 @@ public class RegisterForm extends AppCompatActivity {
         final EditText password=(EditText)(findViewById(TPasswordRegistrationForm));
         final EditText confirmPassword=(EditText)(findViewById(TConfirmPasswordRegistrationForm));
 
-            final Button popUpMenuButton = (Button) (findViewById(R.id.BRegister));
+            final ImageButton popUpMenuButton = (ImageButton) (findViewById(R.id.BRegister));
             SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
             final SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -143,7 +143,7 @@ public class RegisterForm extends AppCompatActivity {
     }
 
     public void withoutRegistration(){
-        final Button popUpMenuButton=(Button)(findViewById(R.id.BWihoutRegistrationRegistrationForm));
+        final ImageButton popUpMenuButton=(ImageButton)(findViewById(R.id.BWihoutRegistrationRegistrationForm));
         SharedPreferences sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
 
